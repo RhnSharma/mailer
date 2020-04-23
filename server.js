@@ -1,5 +1,4 @@
 require('dotenv').config();
-const express = require('express');
 const CronJob = require('cron').CronJob;
 const mongoose = require('mongoose');
 const xlsx = require('xlsx');
@@ -7,7 +6,6 @@ const nodemailer = require('nodemailer');
 const Schema = mongoose.Schema;
 const SubmissionSchema = new Schema({},{strict : false});
 const Submission = mongoose.model('Submission', SubmissionSchema);
-const app = express();
 let newWB, newWS;
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser : true, useUnifiedTopology : true })
@@ -74,7 +72,3 @@ let job = new CronJob('0 * * * *', async function() {
   }
 }, null, true, 'Asia/Kolkata');
 job.start();
-
-app.listen(3000, (req,res) => {
-    console.log('Server started on port 3000');
-})
